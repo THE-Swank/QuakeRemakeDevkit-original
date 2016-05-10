@@ -864,7 +864,7 @@ bool UI_StartBackGroundMap( void )
 	first = FALSE;
 
 	// some map is already running
-	if( !uiStatic.bgmapcount || CVAR_GET_FLOAT( "host_serverstate" ))
+	if( !uiStatic.bgmapcount || CVAR_GET_FLOAT( "host_serverstate" ) || gpGlobals->demoplayback )
 		return FALSE;
 
 	int bgmapid = RANDOM_LONG( 0, uiStatic.bgmapcount - 1 );
@@ -985,6 +985,13 @@ void UI_PopMenu( void )
 		KEY_SetDest( KEY_MENU );
 		UI_Main_Menu();
 	}
+
+	if( uiStatic.m_fDemosPlayed && uiStatic.m_iOldMenuDepth == uiStatic.menuDepth )
+	{
+		CLIENT_COMMAND( FALSE, "demos\n" );
+		uiStatic.m_fDemosPlayed = false;
+		uiStatic.m_iOldMenuDepth = 0;
+	}
 }
 
 // =====================================================================
@@ -1010,7 +1017,7 @@ void UI_UpdateMenu( float flTime )
 	uiStatic.realTime = flTime * 1000;
 	uiStatic.framecount++;
 
-	if( CVAR_GET_FLOAT( "sv_background" ) && !g_engfuncs.pfnClientInGame())
+	if( CVAR_GET_FLOAT( "cl_background" ) && !g_engfuncs.pfnClientInGame())
 		return;	// don't draw menu while level is loading
 
 	if( uiStatic.firstDraw )
@@ -1034,7 +1041,9 @@ void UI_UpdateMenu( float flTime )
                     
 		if( first )
 		{
-			BACKGROUND_TRACK( "gamestartup.mp3", NULL );
+			// if game was launched with commandline e.g. +map or +load ignore the music
+			if( !CL_IsActive( ))
+				BACKGROUND_TRACK( "gamestartup", "gamestartup" );
 			first = FALSE;
 		}
 	}

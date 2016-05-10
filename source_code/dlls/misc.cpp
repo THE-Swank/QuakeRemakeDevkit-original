@@ -441,7 +441,7 @@ void CSpikeShooter::Spawn( void )
 
 	if (FClassnameIs( pev, "trap_shooter" ))
 	{
-		if (m_flWait) m_flWait = 1;
+		if (m_flWait == 0.0f) m_flWait = 1;
 		pev->nextthink = gpGlobals->time + m_flWait;
 	}
 }

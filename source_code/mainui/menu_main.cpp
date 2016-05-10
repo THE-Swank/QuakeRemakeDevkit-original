@@ -99,7 +99,7 @@ static void UI_Background_Ownerdraw( void *self )
 	menuCommon_s	*item = (menuCommon_s *)self;
 
 	// map has background
-	if( CVAR_GET_FLOAT( "sv_background" )) return;
+	if( CVAR_GET_FLOAT( "cl_background" )) return;
 
 	UI_DrawBackground_Callback( self );
 
@@ -223,6 +223,8 @@ static void UI_Main_NewGame( void )
 	CVAR_SET_FLOAT( "teamplay", 0.0f );
 	CVAR_SET_FLOAT( "pausable", 1.0f ); // singleplayer is always allowing pause
 	CVAR_SET_FLOAT( "coop", 0.0f );
+
+	BACKGROUND_TRACK( NULL, NULL );
 
 	CLIENT_COMMAND( FALSE, "newgame\n" );
 }

@@ -422,7 +422,7 @@ char *MenuStrings[HINT_MAXSTRINGS] =
 "",
 "Find more about our products",	// 400
 "",
-"http://www.hlfx.ru/forum",
+"http://cs-mapping.com.ua/forum/forumdisplay.php?f=189",
 "",
 "",
 "",

@@ -191,7 +191,7 @@ static void UI_Background_Ownerdraw( void *self )
 {
 	menuCommon_s	*item = (menuCommon_s *)self;
 
-	if( !CVAR_GET_FLOAT( "sv_background" ))
+	if( !CVAR_GET_FLOAT( "cl_background" ))
 		UI_DrawBackground_Callback( self );
 
 	if( uiStatic.realTime > uiLanGame.refreshTime )
@@ -459,6 +459,14 @@ void UI_LanGame_Menu( void )
 {
 	if ( gMenu.m_gameinfo.gamemode == GAME_SINGLEPLAYER_ONLY )
 		return;
+
+	// stop demos to allow open network sockets
+	if ( gpGlobals->demoplayback && CVAR_GET_FLOAT( "cl_background" ))
+	{
+		uiStatic.m_iOldMenuDepth = uiStatic.menuDepth;
+		CLIENT_COMMAND( FALSE, "stop\n" );
+		uiStatic.m_fDemosPlayed = true;
+	}
 
 	UI_LanGame_Precache();
 	UI_LanGame_Init();

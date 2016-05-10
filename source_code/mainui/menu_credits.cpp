@@ -28,7 +28,7 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 static const char *uiCreditsDefault[] = 
 {
 	"",
-	"Copyright XashXT Group 2011 (C)",
+	"Copyright XashXT Group 2015 (C)",
 	0
 };
 
@@ -64,7 +64,7 @@ static void UI_Credits_DrawFunc( void )
 	int	color = 0;
 
 	// draw the background first
-	if( !uiCredits.finalCredits && !CVAR_GET_FLOAT( "sv_background" ))
+	if( !uiCredits.finalCredits && !CVAR_GET_FLOAT( "cl_background" ))
 		UI_DrawPic( 0, 0, 1024 * uiStatic.scaleX, 768 * uiStatic.scaleY, uiColorWhite, ART_BACKGROUND );
 	else speed = 45.0f;	// syncronize with final background track :-)
 
